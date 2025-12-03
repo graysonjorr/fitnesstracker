@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Fitness Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2>Fitness Tracker</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Home</a></li>
+            <li><a href="pages/nutrition.html">Nutrition</a></li>
+            <li><a href="pages/workouts.html">Workouts</a></li>
+            <li><a href="pages/metrics.html">Metrics</a></li>
+            <li><a href="pages/progress.html">Progress</a></li>
+            <li><a href="pages/settings.html">Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <span id="userNameNav">User</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-header">
+            <p class="date" id="currentDate"></p>
+        </div>
+
+        <!-- Stats Overview -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Calories Today</h3>
+                <p class="stat-number" id="caloriesConsumed">0</p>
+                <p class="stat-goal">Goal: 2000</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Protein</h3>
+                <p class="stat-number" id="proteinConsumed">0g</p>
+                <p class="stat-goal">Goal: 150g</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Workouts This Week</h3>
+                <p class="stat-number" id="weeklyWorkouts">0</p>
+                <p class="stat-goal">Goal: 5</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Weight</h3>
+                <p class="stat-number" id="currentWeight">--</p>
+                <p class="stat-goal">Track progress</p>
+            </div>
+        </section>
+
+        <!-- Progress Bars for Daily Calories Burned and Workout Minutes-->
+        <section class="workout-progress">
+            <h2>Today's Activity Levels</h2>
+            <div class="progress-container">
+                <!-- Daily Workout Minutes-->
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Active Minutes</span>
+                        <span class="progress-values">
+                            <span id = "activeMinutes">0</span> / <span id = "activeMinutesGoal" >60</span>min
+                        </span>
+                    </div>
+                    <div class = "progress-bar-bg">
+                        <div class="progress-bar-fill" id="activeMinutesBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Calories Burned-->
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Calories Burned</span>
+                        <span class="progress-values">
+                            <span id="caloriesBurned">0</span> / <span id="caloriesBurnedGoal">700</span> kcal
+                        </span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="caloriesProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="pages/nutrition.html" class="action-btn">
+                    <span class="fa-solid fa-utensils"></span>
+                    <span>Log Food</span>
+                </a>
+                <a href="pages/workouts.html" class="action-btn">
+                    <span class="fa-solid fa-person-walking"></span>
+                    <span>Log Workout</span>
+                </a>
+                <a href="pages/progress.html" class="action-btn">
+                    <span class="fa-solid fa-bars-progress"></span>
+                    <span>View Progress</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Recent Activity (You'll populate this later) -->
+        <section class="recent-activity">
+            <h2>Recent Activity</h2>
+            <div id="activityFeed">
+                <p class="no-activity">No recent activity. Start logging to see your progress!</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        // Display current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+        
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            // You'll add proper logout logic later
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
