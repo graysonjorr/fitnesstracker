@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition - Fitness Tracker</title>
+    <!-- Link to your CSS files -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/nutrition.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar (same as dashboard) -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2>Fitness Tracker</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../dashboard.html">Home</a></li>
+            <li><a href="nutrition.html" class="active">Nutrition</a></li>
+            <li><a href="workouts.html">Workouts</a></li>
+            <li><a href="goals_and_progress.html">Goals and Progress</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <span id="userNameNav">Demo User</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-header">
+            <h1>Monitor Your Nutrition</h1>
+        </div>
+        <!-- Intro paragraphs -->
+        <section class="nutrition-intro">
+            <p>Track your daily nutrition by logging meals throughout the day. Select foods from our database to automatically calculate your calories, macros, and key nutrients. Monitor your progress toward your daily goals and maintain a balanced diet that supports your fitness journey.
+            </p>
+            
+            <br>
+            
+            <p>Your nutrition goals should align with your broader health and fitness objectives. Whether you're aiming to build muscle, lose weight, improve energy levels, or simply maintain a balanced lifestyle, setting the right macro and calorie targets is essential. Take time to define what success looks like for you. <a href="nutrition-goals.html">Set your nutrition goals</a> to personalize your tracking experience and stay focused on what matters most.</p>
+            
+            <br>
+            
+            <h3>Start Logging Below:</h3>
+        </section>
+
+        <!-- Date Navigation Header-->
+        <section class="date-navigation">
+            <button class="date-nav-btn" id="prevDateBtn">
+                <i class="fa-solid fa-chevron-left"></i>Previous Day
+            </button>
+
+            <input type="date" id = "nutritionDatePicker" class="nutrition-date-picker">
+
+            <button class="date-nav-btn" id="nextDateBtn">
+                Next Day<i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </section>
+
+        <!-- Nutrition Summary Table-->
+        <div class="nutrition-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Meal</th>
+                        <th>Calories<br><small>kcal</small></th>
+                        <th>Carbs<br><small>g</small></th>
+                        <th>Fat<br><small>g</small></th>
+                        <th>Protein<br><small>g</small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Breakfast-->
+                    <tr class="meal-section">
+                        <td colspan="5">
+                            <div class="meal-header">
+                                <h3>Breakfast</h3>
+                                <button class="add-food-btn" onclick="addFood('breakfast')">
+                                    <i class="fa-solid fa-plus"></i> Add Food
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="meal-total">
+                        <td><strong>Breakfast Total</strong></td>
+                        <td id="breakfast-calories">0</td>
+                        <td id="breakfast-carbs">0</td>
+                        <td id="breakfast-fat">0</td>
+                        <td id="breakfast-protein">0</td>
+                    </tr>
+                    <!-- Lunch -->
+                    <tr class="meal-section">
+                        <td colspan="5">
+                            <div class="meal-header">
+                                <h3>Lunch</h3>
+                                <button class="add-food-btn" onclick="addFood('lunch')">
+                                    <i class="fa-solid fa-plus"></i> Add Food
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="meal-total">
+                        <td><strong>Lunch Total</strong></td>
+                        <td id="lunch-calories">0</td>
+                        <td id="lunch-carbs">0</td>
+                        <td id="lunch-fat">0</td>
+                        <td id="lunch-protein">0</td>
+                    </tr>
+                    <!-- Dinner -->
+                    <tr class="meal-section">
+                        <td colspan="5">
+                            <div class="meal-header">
+                                <h3>Dinner</h3>
+                                <button class="add-food-btn" onclick="addFood('dinner')">
+                                    <i class="fa-solid fa-plus"></i> Add Food
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="meal-total">
+                        <td><strong>Dinner Total</strong></td>
+                        <td id="dinner-calories">0</td>
+                        <td id="dinner-carbs">0</td>
+                        <td id="dinner-fat">0</td>
+                        <td id="dinner-protein">0</td>
+                    </tr>
+                    <!-- Snacks -->
+                    <tr class="meal-section">
+                        <td colspan="5">
+                            <div class="meal-header">
+                                <h3>Snacks</h3>
+                                <button class="add-food-btn" onclick="addFood('snacks')">
+                                    <i class="fa-solid fa-plus"></i> Add Food
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="meal-total">
+                        <td><strong>Snacks Total</strong></td>
+                        <td id="snacks-calories">0</td>
+                        <td id="snacks-carbs">0</td>
+                        <td id="snacks-fat">0</td>
+                        <td id="snacks-protein">0</td>
+                    </tr>
+                    <!-- Daily Total -->
+                    <tr class="daily-total">
+                        <td><strong>Daily Total</strong></td>
+                        <td id="daily-calories">0</td>
+                        <td id="daily-carbs">0</td>
+                        <td id="daily-fat">0</td>
+                        <td id="daily-protein">0</td>
+                    </tr>
+                    <tr class="goals-row">
+                        <td><strong>Daily Goals</strong></td>
+                        <td id="goal-calories">1800</td>
+                        <td id="goal-carbs">180</td>
+                        <td id="goal-fat">60</td>
+                        <td id="goal-protein">175</td>
+                    </tr>
+                    <tr class="remaining-row">
+                        <td><strong>Remaining</strong></td>
+                        <td id="remaining-calories">1800</td>
+                        <td id="remaining-carbs">180</td>
+                        <td id="remaining-fat">60</td>
+                        <td id="remaining-protein">175</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Load JavaScript -->
+    <script src="../js/utils.js"></script>
+    <script>
+        // Display current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+    
+        // Load user's nutrition goals from appData
+        if (window.appData && window.appData.currentUser && window.appData.currentUser.profile) {
+            const profile = window.appData.currentUser.profile;
+            document.getElementById('goal-calories').textContent = profile.calorieGoal;
+            document.getElementById('goal-protein').textContent = profile.proteinGoal;
+            document.getElementById('goal-carbs').textContent = profile.carbGoal;
+            document.getElementById('goal-fat').textContent = profile.fatGoal;
+        }
+    
+        // Placeholder function - we'll build this out later
+        function addFood(mealType) {
+            alert('Add food for ' + mealType + ' - coming soon!');
+        }
+    </script>
+</body>
+</html>

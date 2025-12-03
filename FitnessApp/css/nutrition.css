@@ -1,0 +1,264 @@
+/* MINIMALIST BLACK & WHITE THEME - Nutrition Styles */
+
+/* Nutrition Intro Section */
+.nutrition-intro {
+    margin-bottom: 40px;
+    line-height: 1.8;
+    color: #333333;
+}
+
+.nutrition-intro a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 400;
+    border-bottom: 1px solid #000000;
+    transition: all 0.3s ease;
+}
+
+.nutrition-intro a:hover {
+    border-bottom-width: 2px;
+}
+
+.nutrition-intro h3 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #000000;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+/* Date Navigation */
+.date-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin: 30px 0;
+    padding: 0;
+    background: white;
+    border: 1px solid #000000;
+}
+
+.date-nav-btn {
+    background-color: white;
+    color: #000000;
+    border: none;
+    border-right: 1px solid #e0e0e0;
+    padding: 15px 25px;
+    cursor: pointer;
+    font-size: 0.75em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.date-nav-btn:last-child {
+    border-right: none;
+    border-left: 1px solid #e0e0e0;
+}
+
+.date-nav-btn:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.date-nav-btn:active {
+    background-color: #333333;
+}
+
+.nutrition-date-picker {
+    padding: 15px 25px;
+    border: none;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    font-size: 0.9em;
+    cursor: pointer;
+    min-width: 200px;
+    background-color: white;
+    color: #000000;
+    font-weight: 300;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.nutrition-date-picker:hover {
+    background-color: #f5f5f5;
+}
+
+.nutrition-date-picker:focus {
+    outline: none;
+    background-color: #000000;
+    color: white;
+}
+
+/* Table Container */
+.nutrition-table {
+    background: white;
+    border: 1px solid #000000;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.nutrition-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table Headers */
+.nutrition-table thead {
+    background-color: #000000;
+}
+
+.nutrition-table th {
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 300;
+    color: white;
+    border-bottom: none;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    letter-spacing: 2px;
+}
+
+.nutrition-table th small {
+    font-weight: 300;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: lowercase;
+}
+
+/* Table Body */
+.nutrition-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #000000;
+}
+
+/* Meal Section Rows */
+.meal-section td {
+    background-color: #f5f5f5;
+    padding: 12px 15px;
+    border-top: 1px solid #000000;
+}
+
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meal-header h3 {
+    margin: 0;
+    font-size: 0.85em;
+    color: #000000;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+/* Add Food Button */
+.add-food-btn {
+    background-color: white;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 0.75em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.add-food-btn:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.add-food-btn i {
+    font-size: 0.9em;
+}
+
+/* Meal Total Rows */
+.meal-total td {
+    font-weight: 400;
+    background-color: white;
+}
+
+/* Totals, Goals, and Remaining Rows */
+.totals-row,
+.daily-total {
+    background-color: #f5f5f5;
+    font-weight: 400;
+}
+
+.totals-row td,
+.daily-total td {
+    padding: 20px 15px;
+    border-top: 2px solid #000000;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 2px;
+    color: #000000;
+}
+
+.goals-row {
+    background-color: #e0e0e0;
+}
+
+.goals-row td {
+    padding: 15px;
+    color: #333333;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+.remaining-row {
+    background-color: #cccccc;
+}
+
+.remaining-row td {
+    padding: 15px;
+    font-weight: 400;
+    color: #000000;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nutrition-table th,
+    .nutrition-table td {
+        padding: 12px 10px;
+        font-size: 0.85em;
+    }
+    
+    .meal-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .date-navigation {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .date-nav-btn {
+        width: 100%;
+        border-right: none;
+        border-left: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+}
