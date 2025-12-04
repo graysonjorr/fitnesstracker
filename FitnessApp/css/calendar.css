@@ -1,0 +1,418 @@
+/* CALENDAR PAGE STYLES - Minimalist Black & White Theme */
+
+.calendar-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #000;
+}
+
+.calendar-header h1 {
+    font-size: 2.5rem;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.add-event-btn {
+    background: #000;
+    color: #fff;
+    border: 2px solid #000;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.add-event-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Calendar Container */
+.calendar-container {
+    background: #fff;
+    padding: 2rem;
+    border: 2px solid #000;
+    margin-bottom: 2rem;
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #000;
+}
+
+.calendar-nav button {
+    background: #000;
+    color: #fff;
+    border: 2px solid #000;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.calendar-nav button:hover {
+    background: #fff;
+    color: #000;
+}
+
+.calendar-nav h2 {
+    font-size: 1.8rem;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+}
+
+.calendar-day-header {
+    text-align: center;
+    padding: 1rem;
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    background: #f5f5f5;
+    border: 1px solid #000;
+}
+
+#calendarDays {
+    display: contents;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    background: #fff;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-day:hover {
+    background: #f5f5f5;
+    border-color: #000;
+}
+
+.calendar-day.today {
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+}
+
+.calendar-day.other-month {
+    background: #fafafa;
+    color: #999;
+}
+
+.calendar-day.has-events {
+    border: 2px solid #000;
+}
+
+.day-number {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-indicator {
+    width: 8px;
+    height: 8px;
+    background: #000;
+    border-radius: 50%;
+    margin: 2px;
+}
+
+.event-list {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.event-item {
+    padding: 0.25rem;
+    margin-bottom: 0.25rem;
+    background: #000;
+    color: #fff;
+    font-size: 0.7rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+/* Upcoming Events */
+.upcoming-events {
+    background: #fff;
+    padding: 2rem;
+    border: 2px solid #000;
+}
+
+.upcoming-events h2 {
+    font-size: 1.8rem;
+    color: #000;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #000;
+}
+
+.no-events {
+    text-align: center;
+    color: #666;
+    padding: 2rem;
+    font-style: italic;
+}
+
+.upcoming-event-item {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #000;
+    transition: all 0.3s ease;
+}
+
+.upcoming-event-item:hover {
+    background: #f5f5f5;
+}
+
+.upcoming-event-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.upcoming-event-item .event-date {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.upcoming-event-item .event-type {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: #000;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border: 3px solid #000;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: #000;
+}
+
+.close:hover {
+    color: #666;
+}
+
+.modal-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.5rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #000;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    background: #f5f5f5;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    border: 2px solid #000;
+}
+
+.btn-primary {
+    background: #000;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-secondary {
+    background: #fff;
+    color: #000;
+}
+
+.btn-secondary:hover {
+    background: #f5f5f5;
+}
+
+.btn-danger {
+    background: #fff;
+    color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.btn-danger:hover {
+    background: #d32f2f;
+    color: #fff;
+}
+
+/* View Event Modal */
+#viewEventDetails {
+    margin: 1.5rem 0;
+}
+
+#viewEventDetails p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+#viewEventDetails strong {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .calendar-main {
+        padding: 1rem;
+    }
+    
+    .calendar-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .calendar-header h1 {
+        font-size: 2rem;
+    }
+    
+    .calendar-day {
+        min-height: 80px;
+        padding: 0.5rem;
+    }
+    
+    .day-number {
+        font-size: 0.9rem;
+    }
+    
+    .event-item {
+        font-size: 0.6rem;
+    }
+    
+    .calendar-nav h2 {
+        font-size: 1.3rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+}
