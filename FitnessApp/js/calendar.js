@@ -3,6 +3,7 @@
 // Global variables
 let currentDate = new Date();
 let events = [];
+let selectedEvent = null;
 
 // Initialize calendar when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -52,8 +53,15 @@ function initializeEventListeners() {
     // Form submission
     document.getElementById('eventForm').addEventListener('submit', handleAddEvent);
     
-    // Delete event
-    document.getElementById('deleteEventBtn').addEventListener('click', handleDeleteEvent);
+    // Edit and delete event
+    document.getElementById('editEventBtn').addEventListener('click', handleEditEvent);
+    document.getElementById('deleteEventBtn').addEventListener('click', handleDeleteSingleEvent);
+    
+    // Add another event from view modal
+    document.getElementById('addAnotherEventBtn').addEventListener('click', handleAddAnotherEvent);
+    
+    // Complete event checkbox
+    document.getElementById('completeEventCheckbox').addEventListener('change', handleCompleteEvent);
     
     // Click outside modal to close
     window.addEventListener('click', (e) => {
@@ -141,6 +149,11 @@ function createDayElement(day, month, year, isOtherMonth) {
         dayEvents.slice(0, 3).forEach(event => {
             const eventItem = document.createElement('div');
             eventItem.className = 'event-item';
+            if (event.completed) {
+                eventItem.style.background = 'rgba(76, 175, 80, 0.2)';
+                eventItem.style.textDecoration = 'line-through';
+                eventItem.style.color = '#4caf50';
+            }
             eventItem.textContent = event.title;
             eventList.appendChild(eventItem);
         });
@@ -187,7 +200,12 @@ function openAddEventModal(presetDate = null) {
 function closeAddEventModal() {
     const modal = document.getElementById('eventModal');
     modal.classList.remove('active');
-    document.getElementById('eventForm').reset();
+    const form = document.getElementById('eventForm');
+    form.reset();
+    
+    // Reset edit mode
+    form.dataset.editMode = 'false';
+    form.querySelector('button[type="submit"]').textContent = 'Add Event';
 }
 
 // Close all modals
@@ -195,23 +213,54 @@ function closeAllModals() {
     document.querySelectorAll('.modal').forEach(modal => {
         modal.classList.remove('active');
     });
-    document.getElementById('eventForm').reset();
+    const form = document.getElementById('eventForm');
+    form.reset();
+    form.dataset.editMode = 'false';
+    form.querySelector('button[type="submit"]').textContent = 'Add Event';
 }
 
 // Handle add event form submission
 function handleAddEvent(e) {
     e.preventDefault();
     
-    const newEvent = {
-        id: Date.now(),
-        title: document.getElementById('eventTitle').value,
-        type: document.getElementById('eventType').value,
-        date: document.getElementById('eventDate').value,
-        time: document.getElementById('eventTime').value,
-        notes: document.getElementById('eventNotes').value
-    };
+    const form = e.target;
+    const isEditMode = form.dataset.editMode === 'true';
     
-    events.push(newEvent);
+    if (isEditMode) {
+        // Edit existing event
+        const editId = parseInt(form.dataset.editId);
+        const eventIndex = events.findIndex(e => e.id === editId);
+        
+        if (eventIndex !== -1) {
+            events[eventIndex] = {
+                id: editId,
+                title: document.getElementById('eventTitle').value,
+                type: document.getElementById('eventType').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                notes: document.getElementById('eventNotes').value,
+                completed: events[eventIndex].completed || false
+            };
+        }
+        
+        // Reset form mode
+        form.dataset.editMode = 'false';
+        form.querySelector('button[type="submit"]').textContent = 'Add Event';
+    } else {
+        // Add new event
+        const newEvent = {
+            id: Date.now(),
+            title: document.getElementById('eventTitle').value,
+            type: document.getElementById('eventType').value,
+            date: document.getElementById('eventDate').value,
+            time: document.getElementById('eventTime').value,
+            notes: document.getElementById('eventNotes').value,
+            completed: false
+        };
+        
+        events.push(newEvent);
+    }
+    
     saveEvents();
     closeAddEventModal();
     renderCalendar();
@@ -236,19 +285,37 @@ function showDayEvents(dateString, dayEvents) {
         eventDiv.style.marginBottom = '1.5rem';
         eventDiv.style.paddingBottom = '1rem';
         eventDiv.style.borderBottom = '1px solid #ddd';
-        
+        eventDiv.style.cursor = 'pointer';
+        eventDiv.style.transition = 'background 0.3s';
+
         eventDiv.innerHTML = `
-            <h3 style="margin-bottom: 0.5rem; font-weight: 700; text-transform: uppercase;">${event.title}</h3>
+            <h3 style="margin-bottom: 0.5rem; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; ${event.completed ? 'text-decoration: line-through; color: #4caf50;' : ''}">${event.title}</h3>
             <p><strong>Type:</strong> ${event.type}</p>
             ${event.time ? `<p><strong>Time:</strong> ${formatTime(event.time)}</p>` : ''}
             ${event.notes ? `<p><strong>Notes:</strong> ${event.notes}</p>` : ''}
+            ${event.completed ? '<p style="color: #4caf50; font-weight: 400;">✓ Completed</p>' : ''}
         `;
+
+        // Make event clickable for editing
+        eventDiv.addEventListener('click', () => {
+            selectEventForEdit(event);
+        });
+        
+        // Add completed styling
+        if (event.completed) {
+            eventDiv.style.background = 'rgba(76, 175, 80, 0.1)';
+        }
+        
+        eventDiv.addEventListener('mouseenter', () => {
+            eventDiv.style.background = event.completed ? 'rgba(76, 175, 80, 0.15)' : '#f5f5f5';
+        });
+        
+        eventDiv.addEventListener('mouseleave', () => {
+            eventDiv.style.background = event.completed ? 'rgba(76, 175, 80, 0.1)' : 'transparent';
+        });
         
         details.appendChild(eventDiv);
     });
-    
-    // Store current event ID for deletion
-    modal.dataset.eventIds = JSON.stringify(dayEvents.map(e => e.id));
     
     modal.classList.add('active');
 }
@@ -257,19 +324,133 @@ function showDayEvents(dateString, dayEvents) {
 function closeViewEventModal() {
     const modal = document.getElementById('viewEventModal');
     modal.classList.remove('active');
+    selectedEvent = null;
 }
 
-// Handle delete event
-function handleDeleteEvent() {
-    const modal = document.getElementById('viewEventModal');
-    const eventIds = JSON.parse(modal.dataset.eventIds || '[]');
+// Select an event for editing
+function selectEventForEdit(event) {
+    selectedEvent = event;
     
-    if (confirm('Delete all events for this day?')) {
-        events = events.filter(event => !eventIds.includes(event.id));
+    // Update the modal title to show which event is selected
+    document.getElementById('viewEventTitle').style.borderLeft = '4px solid #000';
+    document.getElementById('viewEventTitle').style.paddingLeft = '1rem';
+    
+    // Set the checkbox state
+    const checkbox = document.getElementById('completeEventCheckbox');
+    if (checkbox) {
+        checkbox.checked = event.completed || false;
+    }
+}
+
+// Handle edit event button click
+function handleEditEvent() {
+    if (!selectedEvent) {
+        alert('Please select an event to edit');
+        return;
+    }
+    
+    // Close view modal
+    closeViewEventModal();
+    
+    // Open add event modal with pre-filled data
+    const modal = document.getElementById('eventModal');
+    modal.classList.add('active');
+    
+    // Pre-fill the form with existing event data
+    document.getElementById('eventTitle').value = selectedEvent.title;
+    document.getElementById('eventType').value = selectedEvent.type;
+    document.getElementById('eventDate').value = selectedEvent.date;
+    document.getElementById('eventTime').value = selectedEvent.time || '';
+    document.getElementById('eventNotes').value = selectedEvent.notes || '';
+    
+    // Change the form to edit mode
+    const form = document.getElementById('eventForm');
+    form.dataset.editMode = 'true';
+    form.dataset.editId = selectedEvent.id;
+    
+    // Change button text
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.textContent = 'Update Event';
+}
+
+// Handle delete single event
+function handleDeleteSingleEvent() {
+    if (!selectedEvent) {
+        alert('Please select an event to delete');
+        return;
+    }
+    
+    if (confirm(`Delete "${selectedEvent.title}"?`)) {
+        events = events.filter(event => event.id !== selectedEvent.id);
         saveEvents();
         closeViewEventModal();
         renderCalendar();
         displayUpcomingEvents();
+        selectedEvent = null;
+    }
+}
+
+// Handle marking event as complete
+function handleCompleteEvent() {
+    if (!selectedEvent) {
+        return;
+    }
+    
+    const checkbox = document.getElementById('completeEventCheckbox');
+    const isCompleted = checkbox.checked;
+    
+    // Update the event in the events array
+    const eventIndex = events.findIndex(e => e.id === selectedEvent.id);
+    if (eventIndex !== -1) {
+        events[eventIndex].completed = isCompleted;
+        selectedEvent.completed = isCompleted;
+        saveEvents();
+        
+        // Refresh the display
+        renderCalendar();
+        displayUpcomingEvents();
+        
+        // Update the current modal view
+        const dateString = selectedEvent.date;
+        const dayEvents = events.filter(event => event.date === dateString);
+        
+        // Re-render the event details
+        const details = document.getElementById('viewEventDetails');
+        details.innerHTML = '';
+        dayEvents.forEach(event => {
+            const eventDiv = document.createElement('div');
+            eventDiv.style.marginBottom = '1.5rem';
+            eventDiv.style.paddingBottom = '1rem';
+            eventDiv.style.borderBottom = '1px solid #ddd';
+            eventDiv.style.cursor = 'pointer';
+            eventDiv.style.transition = 'background 0.3s';
+
+            eventDiv.innerHTML = `
+                <h3 style="margin-bottom: 0.5rem; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; ${event.completed ? 'text-decoration: line-through; color: #4caf50;' : ''}">${event.title}</h3>
+                <p><strong>Type:</strong> ${event.type}</p>
+                ${event.time ? `<p><strong>Time:</strong> ${formatTime(event.time)}</p>` : ''}
+                ${event.notes ? `<p><strong>Notes:</strong> ${event.notes}</p>` : ''}
+                ${event.completed ? '<p style="color: #4caf50; font-weight: 400;">✓ Completed</p>' : ''}
+            `;
+
+            eventDiv.addEventListener('click', () => {
+                selectEventForEdit(event);
+            });
+            
+            if (event.completed) {
+                eventDiv.style.background = 'rgba(76, 175, 80, 0.1)';
+            }
+            
+            eventDiv.addEventListener('mouseenter', () => {
+                eventDiv.style.background = event.completed ? 'rgba(76, 175, 80, 0.15)' : '#f5f5f5';
+            });
+            
+            eventDiv.addEventListener('mouseleave', () => {
+                eventDiv.style.background = event.completed ? 'rgba(76, 175, 80, 0.1)' : 'transparent';
+            });
+            
+            details.appendChild(eventDiv);
+        });
     }
 }
 
@@ -295,15 +476,21 @@ function displayUpcomingEvents() {
         const eventDiv = document.createElement('div');
         eventDiv.className = 'upcoming-event-item';
         
+        if (event.completed) {
+            eventDiv.style.background = 'rgba(76, 175, 80, 0.05)';
+            eventDiv.style.borderColor = '#4caf50';
+        }
+        
         const date = new Date(event.date + 'T00:00:00');
         const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
         const dateString = date.toLocaleDateString('en-US', options);
         
         eventDiv.innerHTML = `
-            <h3>${event.title}</h3>
-            <div class="event-type">${event.type}</div>
+            <h3 style="${event.completed ? 'text-decoration: line-through; color: #4caf50;' : ''}">${event.title}</h3>
+            <div class="event-type" style="${event.completed ? 'background: rgba(76, 175, 80, 0.2); color: #4caf50;' : ''}">${event.type}</div>
             <div class="event-date">${dateString}${event.time ? ' at ' + formatTime(event.time) : ''}</div>
             ${event.notes ? `<p>${event.notes}</p>` : ''}
+            ${event.completed ? '<p style="color: #4caf50; font-weight: 400;">✓ Completed</p>' : ''}
         `;
         
         upcomingList.appendChild(eventDiv);
@@ -317,4 +504,19 @@ function formatTime(time) {
     const ampm = hour >= 12 ? 'PM' : 'AM';
     const hour12 = hour % 12 || 12;
     return `${hour12}:${minutes} ${ampm}`;
+}
+
+// Handle add another event from the view modal
+function handleAddAnotherEvent() {
+    // Get the current date being viewed
+    let currentDate = null;
+    if (selectedEvent) {
+        currentDate = selectedEvent.date;
+    }
+    
+    // Close the view modal
+    closeViewEventModal();
+    
+    // Open the add event modal with the same date
+    openAddEventModal(currentDate);
 }

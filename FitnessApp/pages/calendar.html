@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrition - Fitness Tracker</title>
-    <!-- Link to your CSS files -->
+    <title>Calendar - Fitness Tracker</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/calendar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
     <!-- Navigation Bar (same as dashboard) -->
@@ -32,7 +30,7 @@
 
     <main class="calendar-main">
         <div class="calendar-header">
-            <h1>Calendar View</h1>
+            <h1>Calendar</h1>
             <button class="add-event-btn" id="addEventBtn">+ Add Event</button>
         </div>
 
@@ -120,7 +118,15 @@
             <span class="close view-close">&times;</span>
             <h2 id="viewEventTitle"></h2>
             <div id="viewEventDetails"></div>
+            <div style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #e0e0e0; background: #f9f9f9;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 300; letter-spacing: 1px;">
+                    <input type="checkbox" id="completeEventCheckbox" style="width: 18px; height: 18px; cursor: pointer;">
+                    <span>Mark as Completed</span>
+                </label>
+            </div>
             <div class="form-actions">
+                <button class="btn-primary" id="addAnotherEventBtn">Add Event</button>
+                <button class="btn-primary" id="editEventBtn">Edit Event</button>
                 <button class="btn-danger" id="deleteEventBtn">Delete Event</button>
                 <button class="btn-secondary view-close-btn">Close</button>
             </div>
