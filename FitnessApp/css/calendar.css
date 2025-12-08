@@ -3,7 +3,7 @@
 .calendar-main {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 3rem;
+    padding: 3rem 2rem 2rem 2rem;
 }
 
 .calendar-header {
@@ -12,40 +12,40 @@
     align-items: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .calendar-header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #000;
     text-transform: uppercase;
     font-weight: 300;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 .add-event-btn {
-    background: #000;
-    color: #fff;
-    border: 2px solid #000;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
+    background: white;
+    color: #000;
+    border: 1px solid #000;
+    padding: 10px 20px;
+    font-size: 0.75em;
+    font-weight: 300;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 .add-event-btn:hover {
-    background: #fff;
-    color: #000;
+    background: #000;
+    color: #fff;
 }
 
 /* Calendar Container */
 .calendar-container {
     background: #fff;
     padding: 2rem;
-    border: 2px solid #000;
+    border: 1px solid #e0e0e0;
     margin-bottom: 2rem;
 }
 
@@ -55,31 +55,31 @@
     align-items: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .calendar-nav button {
-    background: #000;
-    color: #fff;
-    border: 2px solid #000;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.2rem;
+    background: white;
+    color: #000;
+    border: 1px solid #000;
+    padding: 10px 20px;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 700;
+    font-weight: 300;
 }
 
 .calendar-nav button:hover {
-    background: #fff;
-    color: #000;
+    background: #000;
+    color: white;
 }
 
 .calendar-nav h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #000;
     text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: 300;
+    letter-spacing: 2px;
 }
 
 /* Calendar Grid */
@@ -91,14 +91,14 @@
 
 .calendar-day-header {
     text-align: center;
-    padding: 1rem;
-    font-weight: 700;
+    padding: 15px;
+    font-weight: 300;
     color: #000;
     text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
+    font-size: 0.7em;
+    letter-spacing: 2px;
     background: #f5f5f5;
-    border: 1px solid #000;
+    border: 1px solid #e0e0e0;
 }
 
 #calendarDays {
@@ -107,8 +107,8 @@
 
 .calendar-day {
     aspect-ratio: 1;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -119,113 +119,131 @@
 }
 
 .calendar-day:hover {
-    background: #f5f5f5;
-    border-color: #000;
+    background: #f9f9f9;
+    border-color: #999;
 }
 
 .calendar-day.today {
-    background: #000;
-    color: #fff;
-    font-weight: 700;
+    background: #f5f5f5;
+    border: 1px solid #000;
+    font-weight: 400;
 }
 
 .calendar-day.other-month {
     background: #fafafa;
-    color: #999;
+    color: #ccc;
 }
 
 .calendar-day.has-events {
-    border: 2px solid #000;
+    border-color: #666;
 }
 
 .day-number {
-    font-weight: 700;
-    font-size: 1.1rem;
+    font-weight: 400;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
+    color: #333;
 }
 
 .event-indicator {
-    width: 8px;
-    height: 8px;
-    background: #000;
+    width: 6px;
+    height: 6px;
+    background: #666;
     border-radius: 50%;
     margin: 2px;
 }
 
 .event-list {
     margin-top: 0.5rem;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
 }
 
 .event-item {
-    padding: 0.25rem;
-    margin-bottom: 0.25rem;
-    background: #000;
-    color: #fff;
-    font-size: 0.7rem;
+    padding: 4px 6px;
+    margin-bottom: 4px;
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    font-size: 0.65rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    font-weight: 600;
+    font-weight: 300;
+    letter-spacing: 0.5px;
 }
 
 /* Upcoming Events */
 .upcoming-events {
     background: #fff;
     padding: 2rem;
-    border: 2px solid #000;
+    border: 1px solid #e0e0e0;
 }
 
 .upcoming-events h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #000;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: 300;
+    letter-spacing: 2px;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .no-events {
     text-align: center;
-    color: #666;
+    color: #999;
     padding: 2rem;
     font-style: italic;
+    font-weight: 300;
 }
 
 .upcoming-event-item {
-    padding: 1rem;
+    padding: 1.5rem;
     margin-bottom: 1rem;
-    border: 1px solid #000;
+    border: 1px solid #e0e0e0;
     transition: all 0.3s ease;
+    background: #fff;
 }
 
 .upcoming-event-item:hover {
-    background: #f5f5f5;
+    background: #f9f9f9;
 }
 
 .upcoming-event-item h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
-    font-weight: 700;
+    font-weight: 300;
     text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #000;
 }
 
 .upcoming-event-item .event-date {
-    font-weight: 600;
+    font-weight: 300;
     margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
 }
 
 .upcoming-event-item .event-type {
     display: inline-block;
-    padding: 0.25rem 0.5rem;
-    background: #000;
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 600;
+    padding: 4px 10px;
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    font-size: 0.7em;
+    font-weight: 300;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.upcoming-event-item p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-weight: 300;
 }
 
 /* Modal Styles */
@@ -237,7 +255,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal.active {
@@ -248,35 +266,38 @@
 
 .modal-content {
     background: #fff;
-    padding: 2rem;
-    border: 3px solid #000;
+    padding: 2.5rem;
+    border: 1px solid #e0e0e0;
     width: 90%;
     max-width: 500px;
     position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .close {
     position: absolute;
-    right: 1rem;
-    top: 1rem;
-    font-size: 2rem;
-    font-weight: 700;
+    right: 1.5rem;
+    top: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 300;
     cursor: pointer;
-    color: #000;
+    color: #666;
+    transition: color 0.3s;
 }
 
 .close:hover {
-    color: #666;
+    color: #000;
 }
 
 .modal-content h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1px;
-    border-bottom: 2px solid #000;
-    padding-bottom: 0.5rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1rem;
+    color: #000;
 }
 
 /* Form Styles */
@@ -287,28 +308,32 @@
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 700;
+    font-weight: 300;
     text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
+    font-size: 0.75em;
+    letter-spacing: 2px;
+    color: #333;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #000;
-    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    font-size: 0.95rem;
     font-family: inherit;
     background: #fff;
+    transition: all 0.3s;
+    font-weight: 300;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    background: #f5f5f5;
+    border-color: #999;
+    background: #fafafa;
 }
 
 .form-actions {
@@ -321,14 +346,14 @@
 .btn-primary,
 .btn-secondary,
 .btn-danger {
-    padding: 0.75rem 1.5rem;
-    font-weight: 700;
+    padding: 10px 20px;
+    font-weight: 300;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.9rem;
-    border: 2px solid #000;
+    letter-spacing: 2px;
+    font-size: 0.75em;
+    border: 1px solid #000;
 }
 
 .btn-primary {
@@ -337,8 +362,7 @@
 }
 
 .btn-primary:hover {
-    background: #fff;
-    color: #000;
+    background: #333;
 }
 
 .btn-secondary {
@@ -352,12 +376,12 @@
 
 .btn-danger {
     background: #fff;
-    color: #d32f2f;
-    border-color: #d32f2f;
+    color: #c62828;
+    border-color: #c62828;
 }
 
 .btn-danger:hover {
-    background: #d32f2f;
+    background: #c62828;
     color: #fff;
 }
 
@@ -368,20 +392,32 @@
 
 #viewEventDetails p {
     margin-bottom: 1rem;
-    line-height: 1.6;
+    line-height: 1.8;
+    color: #666;
+    font-weight: 300;
+}
+
+#viewEventDetails h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
 }
 
 #viewEventDetails strong {
-    font-weight: 700;
+    font-weight: 400;
     text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
+    font-size: 0.75em;
+    letter-spacing: 2px;
+    color: #333;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .calendar-main {
-        padding: 1rem;
+        padding: 2rem 1rem 1rem 1rem;
     }
     
     .calendar-header {
@@ -391,12 +427,12 @@
     }
     
     .calendar-header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     
     .calendar-day {
         min-height: 80px;
-        padding: 0.5rem;
+        padding: 8px;
     }
     
     .day-number {
@@ -405,14 +441,15 @@
     
     .event-item {
         font-size: 0.6rem;
+        padding: 3px 5px;
     }
     
     .calendar-nav h2 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     
     .modal-content {
         width: 95%;
-        padding: 1.5rem;
+        padding: 2rem;
     }
 }
