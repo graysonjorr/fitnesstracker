@@ -23,6 +23,29 @@
     letter-spacing: 2px;
 }
 
+.calendar-header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.sync-program-btn {
+    background: white;
+    color: #000;
+    border: 1px solid #000;
+    padding: 10px 20px;
+    font-size: 0.75em;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.sync-program-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
 .add-event-btn {
     background: white;
     color: #000;
@@ -256,12 +279,14 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
 }
 
 .modal.active {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 2rem 0;
 }
 
 .modal-content {
@@ -272,6 +297,11 @@
     max-width: 500px;
     position: relative;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+}
+
+.modal-content-large {
+    max-width: 700px;
 }
 
 .close {
@@ -298,6 +328,89 @@
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 1rem;
     color: #000;
+}
+
+/* Sync Modal Styles */
+.sync-step h3 {
+    font-size: 1.2rem;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.sync-instructions {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+.program-select-item {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.program-select-item:hover {
+    background: #f5f5f5;
+    border-color: #000;
+}
+
+.program-select-item h4 {
+    font-size: 1.1rem;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin: 0 0 0.5rem 0;
+}
+
+.program-select-item p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 300;
+}
+
+.day-assignment-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+}
+
+.day-assignment-item label {
+    flex: 1;
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+    color: #000;
+}
+
+.day-assignment-item select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: #fff;
+    font-weight: 300;
+}
+
+.day-assignment-item select:focus {
+    outline: none;
+    border-color: #999;
 }
 
 /* Form Styles */
@@ -430,6 +543,15 @@
         font-size: 1.5rem;
     }
     
+    .calendar-header-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .calendar-header-actions button {
+        width: 100%;
+    }
+    
     .calendar-day {
         min-height: 80px;
         padding: 8px;
@@ -448,8 +570,22 @@
         font-size: 1.2rem;
     }
     
-    .modal-content {
+    .modal-content,
+    .modal-content-large {
         width: 95%;
         padding: 2rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
+        width: 100%;
+    }
+    
+    .day-assignment-item {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

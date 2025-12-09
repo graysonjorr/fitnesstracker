@@ -4,6 +4,7 @@
 let currentDate = new Date();
 let events = [];
 let selectedEvent = null;
+let selectedProgramForSync = null;
 
 // Initialize calendar when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -57,11 +58,18 @@ function initializeEventListeners() {
     document.getElementById('editEventBtn').addEventListener('click', handleEditEvent);
     document.getElementById('deleteEventBtn').addEventListener('click', handleDeleteSingleEvent);
     
-    // Add another event from view modal
+    // Add another event button
     document.getElementById('addAnotherEventBtn').addEventListener('click', handleAddAnotherEvent);
     
     // Complete event checkbox
     document.getElementById('completeEventCheckbox').addEventListener('change', handleCompleteEvent);
+    
+    // Sync workout program
+    document.getElementById('syncProgramBtn').addEventListener('click', openSyncProgramModal);
+    document.querySelector('.sync-close').addEventListener('click', closeSyncProgramModal);
+    document.querySelector('.sync-cancel-btn').addEventListener('click', closeSyncProgramModal);
+    document.getElementById('backToProgramsBtn').addEventListener('click', showProgramSelectStep);
+    document.getElementById('syncToCalendarBtn').addEventListener('click', handleSyncToCalendar);
     
     // Click outside modal to close
     window.addEventListener('click', (e) => {
@@ -390,6 +398,21 @@ function handleDeleteSingleEvent() {
     }
 }
 
+// Handle add another event from the view modal
+function handleAddAnotherEvent() {
+    // Get the current date being viewed
+    let currentDate = null;
+    if (selectedEvent) {
+        currentDate = selectedEvent.date;
+    }
+    
+    // Close the view modal
+    closeViewEventModal();
+    
+    // Open the add event modal with the same date
+    openAddEventModal(currentDate);
+}
+
 // Handle marking event as complete
 function handleCompleteEvent() {
     if (!selectedEvent) {
@@ -506,17 +529,177 @@ function formatTime(time) {
     return `${hour12}:${minutes} ${ampm}`;
 }
 
-// Handle add another event from the view modal
-function handleAddAnotherEvent() {
-    // Get the current date being viewed
-    let currentDate = null;
-    if (selectedEvent) {
-        currentDate = selectedEvent.date;
+// Open sync program modal
+function openSyncProgramModal() {
+    const modal = document.getElementById('syncProgramModal');
+    
+    // Load workout programs from localStorage
+    const workoutPrograms = JSON.parse(localStorage.getItem('workoutPrograms') || '[]');
+    
+    if (workoutPrograms.length === 0) {
+        alert('No workout programs found. Please create a workout program first.');
+        return;
     }
     
-    // Close the view modal
-    closeViewEventModal();
+    // Display programs
+    const programsList = document.getElementById('programsList');
+    programsList.innerHTML = '';
     
-    // Open the add event modal with the same date
-    openAddEventModal(currentDate);
+    workoutPrograms.forEach(program => {
+        const programItem = document.createElement('div');
+        programItem.className = 'program-select-item';
+        programItem.innerHTML = `
+            <h4>${program.name}</h4>
+            <p>${program.numDays} days per week</p>
+        `;
+        programItem.addEventListener('click', () => selectProgramForSync(program));
+        programsList.appendChild(programItem);
+    });
+    
+    // Show step 1
+    showProgramSelectStep();
+    
+    modal.classList.add('active');
+}
+
+// Close sync program modal
+function closeSyncProgramModal() {
+    const modal = document.getElementById('syncProgramModal');
+    modal.classList.remove('active');
+    selectedProgramForSync = null;
+}
+
+// Select program for sync
+function selectProgramForSync(program) {
+    selectedProgramForSync = program;
+    showDayAssignmentStep();
+}
+
+// Show program select step
+function showProgramSelectStep() {
+    document.getElementById('selectProgramStep').style.display = 'block';
+    document.getElementById('assignDaysStep').style.display = 'none';
+}
+
+// Show day assignment step
+function showDayAssignmentStep() {
+    if (!selectedProgramForSync) return;
+    
+    document.getElementById('selectProgramStep').style.display = 'none';
+    document.getElementById('assignDaysStep').style.display = 'block';
+    
+    // Set default start date to today
+    const today = new Date();
+    document.getElementById('syncStartDate').value = today.toISOString().split('T')[0];
+    
+    // Build day assignment UI
+    const dayAssignmentsList = document.getElementById('dayAssignmentsList');
+    dayAssignmentsList.innerHTML = '';
+    
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+    selectedProgramForSync.workoutDays.forEach(workoutDay => {
+        const assignmentItem = document.createElement('div');
+        assignmentItem.className = 'day-assignment-item';
+        
+        assignmentItem.innerHTML = `
+            <label>${workoutDay.name}</label>
+            <select class="day-assignment-select" data-workout-day="${workoutDay.dayNumber}">
+                <option value="">-- Skip this day --</option>
+                ${daysOfWeek.map((day, index) => 
+                    `<option value="${index}">${day}</option>`
+                ).join('')}
+            </select>
+        `;
+        
+        dayAssignmentsList.appendChild(assignmentItem);
+    });
+}
+
+// Handle sync to calendar
+function handleSyncToCalendar() {
+    if (!selectedProgramForSync) return;
+    
+    const startDateStr = document.getElementById('syncStartDate').value;
+    if (!startDateStr) {
+        alert('Please select a start date');
+        return;
+    }
+    
+    const numWeeks = parseInt(document.getElementById('syncWeeks').value);
+    
+    // Collect day assignments
+    const dayAssignments = {};
+    const assignmentSelects = document.querySelectorAll('.day-assignment-select');
+    
+    assignmentSelects.forEach(select => {
+        const workoutDayNum = parseInt(select.dataset.workoutDay);
+        const assignedDayOfWeek = select.value;
+        
+        if (assignedDayOfWeek !== '') {
+            dayAssignments[workoutDayNum] = parseInt(assignedDayOfWeek);
+        }
+    });
+    
+    if (Object.keys(dayAssignments).length === 0) {
+        alert('Please assign at least one workout day to a day of the week');
+        return;
+    }
+    
+    // Generate calendar events
+    const startDate = new Date(startDateStr + 'T00:00:00');
+    let eventsCreated = 0;
+    
+    for (let week = 0; week < numWeeks; week++) {
+        selectedProgramForSync.workoutDays.forEach(workoutDay => {
+            const assignedDayOfWeek = dayAssignments[workoutDay.dayNumber];
+            
+            if (assignedDayOfWeek !== undefined) {
+                // Calculate the date for this workout
+                const eventDate = new Date(startDate);
+                eventDate.setDate(startDate.getDate() + (week * 7));
+                
+                // Adjust to the correct day of week
+                const currentDayOfWeek = eventDate.getDay();
+                const daysToAdd = (assignedDayOfWeek - currentDayOfWeek + 7) % 7;
+                eventDate.setDate(eventDate.getDate() + daysToAdd);
+                
+                const dateString = eventDate.toISOString().split('T')[0];
+                
+                // Build exercise list for event notes
+                let exercisesList = '';
+                if (workoutDay.exercises && workoutDay.exercises.length > 0) {
+                    exercisesList = workoutDay.exercises.map(ex => {
+                        let details = ex.name;
+                        if (ex.sets) details += ` - ${ex.sets} sets`;
+                        if (ex.reps) details += ` x ${ex.reps} reps`;
+                        if (ex.weight) details += ` @ ${ex.weight}`;
+                        return details;
+                    }).join('\n');
+                }
+                
+                // Create event
+                const newEvent = {
+                    id: Date.now() + eventsCreated,
+                    title: workoutDay.name,
+                    type: 'workout',
+                    date: dateString,
+                    time: '',
+                    notes: exercisesList,
+                    completed: false
+                };
+                
+                events.push(newEvent);
+                eventsCreated++;
+            }
+        });
+    }
+    
+    // Save and render
+    saveEvents();
+    renderCalendar();
+    displayUpcomingEvents();
+    closeSyncProgramModal();
+    
+    alert(`Successfully synced ${eventsCreated} workouts to your calendar!`);
 }

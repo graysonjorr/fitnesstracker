@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workouts - Fitness Tracker</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/workouts.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation Bar (same as dashboard) -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2>Grayson Orr</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../dashboard.html">Home</a></li>
+            <li><a href="nutrition.html">Nutrition</a></li>
+            <li><a href="workouts.html" class="active">Workouts</a></li>
+            <li><a href="goals.html">Goals and Progress</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <span id="userNameNav">Demo User</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+    
+    <main class="workouts-main">
+        <div class="workouts-header">
+            <h1>Workout Programs</h1>
+        </div>
+
+        <!-- Program Tabs -->
+        <div class="program-tabs" id="programTabs">
+            <button class="tab-btn new-program-tab" id="newProgramTab">+</button>
+        </div>
+
+        <!-- Workspace Area -->
+        <div class="workspace" id="workspace">
+            <div class="no-programs-message">
+                <p>No workout programs yet.</p>
+                <p>Click the <strong>+</strong> button above to create your first program.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Program Modal -->
+    <div id="programModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Workout Program</h2>
+            <form id="programForm">
+                <div class="form-group">
+                    <label for="programName">Program Name:</label>
+                    <input type="text" id="programName" placeholder="e.g., Summer Shred, Strength Builder" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="programDescription">Description (Optional):</label>
+                    <textarea id="programDescription" rows="2" placeholder="Brief description of this workout program"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Number of Days Per Week:</label>
+                    <div class="day-selector">
+                        <button type="button" class="day-btn" data-days="3">3 Days</button>
+                        <button type="button" class="day-btn" data-days="4">4 Days</button>
+                        <button type="button" class="day-btn" data-days="5">5 Days</button>
+                        <button type="button" class="day-btn" data-days="6">6 Days</button>
+                    </div>
+                </div>
+
+                <div class="form-group" id="dayNamesSection" style="display: none;">
+                    <label>Name Each Workout Day:</label>
+                    <div id="dayNamesList"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="programNotes">Notes (Optional):</label>
+                    <textarea id="programNotes" rows="3" placeholder="Any additional notes, tips, or reminders"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Create Program</button>
+                    <button type="button" class="btn-secondary" id="cancelProgramBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Exercise Modal -->
+    <div id="exerciseModal" class="modal">
+        <div class="modal-content">
+            <span class="close exercise-close">&times;</span>
+            <h2>Add Exercise</h2>
+            <form id="exerciseForm">
+                <div class="form-group">
+                    <label for="exerciseName">Exercise Name:</label>
+                    <input type="text" id="exerciseName" placeholder="e.g., Bench Press, Squats" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="exerciseSets">Sets:</label>
+                    <input type="text" id="exerciseSets" placeholder="e.g., 3, 4, 3-4">
+                </div>
+
+                <div class="form-group">
+                    <label for="exerciseReps">Reps:</label>
+                    <input type="text" id="exerciseReps" placeholder="e.g., 10, 8-12, AMRAP">
+                </div>
+
+                <div class="form-group">
+                    <label for="exerciseWeight">Weight/Intensity:</label>
+                    <input type="text" id="exerciseWeight" placeholder="e.g., 135 lbs, Bodyweight, RPE 8">
+                </div>
+
+                <div class="form-group">
+                    <label for="exerciseNotes">Notes (Optional):</label>
+                    <textarea id="exerciseNotes" rows="3" placeholder="Rest time, tempo, technique cues, etc."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Add Exercise</button>
+                    <button type="button" class="btn-secondary exercise-cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/workouts.js"></script>
+</body>
+</html>

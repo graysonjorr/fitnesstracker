@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goals and Progress - Fitness Tracker</title>
+    <title>Workouts - Fitness Tracker</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/goals.css">
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
-
 <body>
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (same as dashboard) -->
     <nav class="navbar">
         <div class="nav-brand">
             <h2>Grayson Orr</h2>
@@ -24,13 +23,74 @@
             <li><a href="settings.html">Settings</a></li>
         </ul>
         <div class="nav-user">
-            <span id="userNameNav">User</span>
+            <span id="userNameNav">Demo User</span>
             <button id="logoutBtn" class="btn-logout">Logout</button>
         </div>
     </nav>
 
-    <!-- Main Content -->
-     
+    <main class="goals-main">
+        <div class="goals-header">
+            <h1>Goals and Progress</h1>
+            <button class="add-goal-btn" id="addGoalBtn">+ New Goal</button>
+        </div>
 
-    
+        <!-- Goals Container -->
+        <div class="goals-container" id="goalsContainer">
+            <div class="no-goals-message">
+                <p>No goals yet.</p>
+                <p>Click <strong>+ New Goal</strong> to get started.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Goal Modal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="goalModalTitle">Create New Goal</h2>
+            <form id="goalForm">
+                <div class="form-group">
+                    <label for="goalTitle">Goal Title:</label>
+                    <input type="text" id="goalTitle" placeholder="e.g., Lose 20 lbs, Run a Marathon, Bench 225 lbs" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="goalDescription">Description:</label>
+                    <textarea id="goalDescription" rows="3" placeholder="Why is this goal important to you?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="goalTargetDate">Target Date (Optional):</label>
+                    <input type="date" id="goalTargetDate">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Save Goal</button>
+                    <button type="button" class="btn-secondary" id="cancelGoalBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Step Modal -->
+    <div id="stepModal" class="modal">
+        <div class="modal-content">
+            <span class="close step-close">&times;</span>
+            <h2>Add Action Step</h2>
+            <form id="stepForm">
+                <div class="form-group">
+                    <label for="stepDescription">Action Step:</label>
+                    <textarea id="stepDescription" rows="3" placeholder="What action will you take to achieve this goal?" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Add Step</button>
+                    <button type="button" class="btn-secondary step-cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/goals.js"></script>
 </body>
+</html>
