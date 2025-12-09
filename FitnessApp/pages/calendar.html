@@ -6,10 +6,9 @@
     <title>Calendar - Fitness Tracker</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/calendar.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-    <!-- Navigation Bar (same as dashboard) -->
+    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-brand">
             <h2>Grayson Orr</h2>
@@ -31,7 +30,10 @@
     <main class="calendar-main">
         <div class="calendar-header">
             <h1>Calendar</h1>
-            <button class="add-event-btn" id="addEventBtn">+ Add Event</button>
+            <div class="calendar-header-actions">
+                <button class="sync-program-btn" id="syncProgramBtn">Sync Workout Program</button>
+                <button class="add-event-btn" id="addEventBtn">+ Add Event</button>
+            </div>
         </div>
 
         <div class="calendar-container">
@@ -133,8 +135,50 @@
         </div>
     </div>
 
+    <!-- Sync Workout Program Modal -->
+    <div id="syncProgramModal" class="modal">
+        <div class="modal-content modal-content-large">
+            <span class="close sync-close">&times;</span>
+            <h2>Sync Workout Program to Calendar</h2>
+            
+            <div id="syncProgramContent">
+                <!-- Step 1: Select Program -->
+                <div id="selectProgramStep" class="sync-step">
+                    <h3>Select a Workout Program</h3>
+                    <div id="programsList"></div>
+                </div>
+                
+                <!-- Step 2: Assign Days -->
+                <div id="assignDaysStep" class="sync-step" style="display: none;">
+                    <h3>Assign Workout Days to Calendar</h3>
+                    <p class="sync-instructions">Choose which day of the week each workout should occur:</p>
+                    <div id="dayAssignmentsList"></div>
+                    
+                    <div class="form-group">
+                        <label for="syncStartDate">Start Date:</label>
+                        <input type="date" id="syncStartDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="syncWeeks">Number of Weeks:</label>
+                        <select id="syncWeeks">
+                            <option value="4">4 weeks</option>
+                            <option value="6">6 weeks</option>
+                            <option value="8" selected>8 weeks</option>
+                            <option value="12">12 weeks</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-primary" id="syncToCalendarBtn">Sync to Calendar</button>
+                        <button class="btn-secondary" id="backToProgramsBtn">Back</button>
+                        <button class="btn-secondary sync-cancel-btn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/calendar.js"></script>
 </body>
 </html>
-
-
