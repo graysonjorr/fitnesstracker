@@ -4,7 +4,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
-CORS(app)  # Allow your HTML/JS to make requests to this API
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Database connection
 def get_db_connection():
@@ -47,6 +47,63 @@ def search_foods():
     conn.close()
     
     return jsonify(foods)
+
+# Log a food entry
+@app.route('/api/food_logs', methods=['POST'])
+def log_food():
+    data = request.json
+    user_id = data.get('user_id')
+    food_id = data.get('food_id')
+    grams = data.get('grams')
+    meal_type = data.get('meal_type')
+    log_date = data.get('log_date')
+    
+    if not all([user_id, food_id, grams, log_date]):
+        return jsonify({'error': 'Missing required fields'}), 400
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        INSERT INTO food_logs (user_id, food_id, grams, meal_type, log_date)
+        VALUES (%s, %s, %s, %s, %s)
+        RETURNING id
+    """, (user_id, food_id, grams, meal_type, log_date))
+    
+    log_id = cursor.fetchone()[0]
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+    return jsonify({'id': log_id, 'message': 'Food logged successfully'}), 201
+
+# Get food logs for a specific date
+@app.route('/api/food_logs', methods=['GET'])
+def get_food_logs():
+    user_id = request.args.get('user_id')
+    log_date = request.args.get('date')
+    
+    if not user_id or not log_date:
+        return jsonify({'error': 'user_id and date are required'}), 400
+    
+    conn = get_db_connection()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    
+    cursor.execute("""
+        SELECT fl.id, fl.grams, fl.meal_type, fl.log_date,
+               f.description, f.calories_per_100g, f.protein_per_100g,
+               f.carbs_per_100g, f.fat_per_100g
+        FROM food_logs fl
+        JOIN foods f ON fl.food_id = f.id
+        WHERE fl.user_id = %s AND fl.log_date = %s
+        ORDER BY fl.meal_type, fl.id
+    """, (user_id, log_date))
+    
+    logs = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    
+    return jsonify(logs)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
