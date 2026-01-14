@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Log - Fitness Tracker</title>
+    <!-- Link to your CSS files -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/exercise.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar (same as dashboard) -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2>Grayson Orr</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../dashboard.html">Home</a></li>
+            <li><a href="nutrition.html">Nutrition</a></li>
+            <li><a href="exerciseLog.html" class="active">Exercise Log</a></li>
+            <li><a href="workouts.html">Workouts</a></li>
+            <li><a href="goals.html">Goals and Progress</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="nav-user">
+            <span id="userNameNav">Demo User</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <main class="exercise-main">
+        <div class="exercise-header">
+            <h1>EXERCISE LOG</h1>
+            <p class="date" id="currentDate"></p>
+        </div>
+
+        <!-- Log Activity Section -->
+        <section class="log-activity-section">
+            <h2>LOG ACTIVITY</h2>
+            <div class="log-activity-card">
+                <form id="activityForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="activityType">Activity Type</label>
+                            <select id="activityType" required>
+                                <option value="">Select activity...</option>
+                                <option value="running">Running</option>
+                                <option value="walking">Walking</option>
+                                <option value="cycling">Cycling</option>
+                                <option value="swimming">Swimming</option>
+                                <option value="hiking">Hiking</option>
+                                <option value="yoga">Yoga</option>
+                                <option value="strength">Strength Training</option>
+                                <option value="sports">Sports</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activityDate">Date</label>
+                            <input type="date" id="activityDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activityDuration">Duration (minutes)</label>
+                            <input type="number" id="activityDuration" min="1" placeholder="30" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="activityDistance">Distance (miles)</label>
+                            <input type="number" id="activityDistance" step="0.1" min="0" placeholder="3.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activityCalories">Calories Burned</label>
+                            <input type="number" id="activityCalories" min="0" placeholder="250">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activityIntensity">Intensity</label>
+                            <select id="activityIntensity">
+                                <option value="low">Low</option>
+                                <option value="moderate" selected>Moderate</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="activityNotes">Notes (optional)</label>
+                        <textarea id="activityNotes" rows="3" placeholder="How did it feel? Any observations..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">LOG ACTIVITY</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Daily Activity Summary -->
+        <section class="daily-activity-section">
+            <h2>TODAY'S ACTIVITY</h2>
+            
+            <div class="activity-stats-grid">
+                <div class="activity-stat-card">
+                    <div class="stat-content">
+                        <h3>STEPS</h3>
+                        <div class="stat-number" id="stepsCount">0</div>
+                        <div class="stat-goal">Goal: 10,000</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="stepsProgress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-stat-card">
+                    <div class="stat-content">
+                        <h3>CALORIES BURNED</h3>
+                        <div class="stat-number" id="caloriesBurned">0</div>
+                        <div class="stat-goal">Goal: 500</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="caloriesProgress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-stat-card">
+                    <div class="stat-content">
+                        <h3>ACTIVE MINUTES</h3>
+                        <div class="stat-number" id="activeMinutes">0</div>
+                        <div class="stat-goal">Goal: 30</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="minutesProgress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-stat-card">
+                    <div class="stat-content">
+                        <h3>DISTANCE</h3>
+                        <div class="stat-number" id="totalDistance">0.0 <span style="font-size: 1.2rem;">mi</span></div>
+                        <div class="stat-goal">Goal: 5 mi</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="distanceProgress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity Log History -->
+        <section class="activity-history-section">
+            <h2>ACTIVITY HISTORY</h2>
+            <div class="activity-log-container" id="activityLogContainer">
+                <p class="no-activity">No activities logged yet. Start by logging your first activity above!</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="exercise.js"></script>
+</body>
+</html>

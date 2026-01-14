@@ -19,6 +19,7 @@
         <ul class="nav-links">
             <li><a href="../dashboard.html">Home</a></li>
             <li><a href="nutrition.html" class="active">Nutrition</a></li>
+            <li><a href="exerciseLog.html">Exercise Log</a></li>
             <li><a href="workouts.html">Workouts</a></li>
             <li><a href="goals.html">Goals and Progress</a></li>
             <li><a href="calendar.html">Calendar</a></li>
@@ -55,7 +56,7 @@
                 <i class="fa-solid fa-chevron-left"></i>Previous Day
             </button>
 
-            <input type="date" id = "nutritionDatePicker" class="nutrition-date-picker">
+            <input type="date" id="nutritionDatePicker" class="nutrition-date-picker">
 
             <button class="date-nav-btn" id="nextDateBtn">
                 Next Day<i class="fa-solid fa-chevron-right"></i>
@@ -72,80 +73,89 @@
                         <th>Carbs<br><small>g</small></th>
                         <th>Fat<br><small>g</small></th>
                         <th>Protein<br><small>g</small></th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!--Breakfast-->
                     <tr class="meal-section">
-                        <td colspan="5">
+                        <td colspan="6">
                             <div class="meal-header">
                                 <h3>Breakfast</h3>
-                                <button class="add-food-btn" onclick="addFood('breakfast')">
+                                <button class="add-food-btn" data-meal="breakfast">
                                     <i class="fa-solid fa-plus"></i> Add Food
                                 </button>
                             </div>
                         </td>
                     </tr>
+                    <tbody id="breakfast-foods"></tbody>
                     <tr class="meal-total">
                         <td><strong>Breakfast Total</strong></td>
                         <td id="breakfast-calories">0</td>
                         <td id="breakfast-carbs">0</td>
                         <td id="breakfast-fat">0</td>
                         <td id="breakfast-protein">0</td>
+                        <td></td>
                     </tr>
                     <!-- Lunch -->
                     <tr class="meal-section">
-                        <td colspan="5">
+                        <td colspan="6">
                             <div class="meal-header">
                                 <h3>Lunch</h3>
-                                <button class="add-food-btn" onclick="addFood('lunch')">
+                                <button class="add-food-btn" data-meal="lunch">
                                     <i class="fa-solid fa-plus"></i> Add Food
                                 </button>
                             </div>
                         </td>
                     </tr>
+                    <tbody id="lunch-foods"></tbody>
                     <tr class="meal-total">
                         <td><strong>Lunch Total</strong></td>
                         <td id="lunch-calories">0</td>
                         <td id="lunch-carbs">0</td>
                         <td id="lunch-fat">0</td>
                         <td id="lunch-protein">0</td>
+                        <td></td>
                     </tr>
                     <!-- Dinner -->
                     <tr class="meal-section">
-                        <td colspan="5">
+                        <td colspan="6">
                             <div class="meal-header">
                                 <h3>Dinner</h3>
-                                <button class="add-food-btn" onclick="addFood('dinner')">
+                                <button class="add-food-btn" data-meal="dinner">
                                     <i class="fa-solid fa-plus"></i> Add Food
                                 </button>
                             </div>
                         </td>
                     </tr>
+                    <tbody id="dinner-foods"></tbody>
                     <tr class="meal-total">
                         <td><strong>Dinner Total</strong></td>
                         <td id="dinner-calories">0</td>
                         <td id="dinner-carbs">0</td>
                         <td id="dinner-fat">0</td>
                         <td id="dinner-protein">0</td>
+                        <td></td>
                     </tr>
                     <!-- Snacks -->
                     <tr class="meal-section">
-                        <td colspan="5">
+                        <td colspan="6">
                             <div class="meal-header">
                                 <h3>Snacks</h3>
-                                <button class="add-food-btn" onclick="addFood('snacks')">
+                                <button class="add-food-btn" data-meal="snacks">
                                     <i class="fa-solid fa-plus"></i> Add Food
                                 </button>
                             </div>
                         </td>
                     </tr>
+                    <tbody id="snacks-foods"></tbody>
                     <tr class="meal-total">
                         <td><strong>Snacks Total</strong></td>
                         <td id="snacks-calories">0</td>
                         <td id="snacks-carbs">0</td>
                         <td id="snacks-fat">0</td>
                         <td id="snacks-protein">0</td>
+                        <td></td>
                     </tr>
                     <!-- Daily Total -->
                     <tr class="daily-total">
@@ -154,6 +164,7 @@
                         <td id="daily-carbs">0</td>
                         <td id="daily-fat">0</td>
                         <td id="daily-protein">0</td>
+                        <td></td>
                     </tr>
                     <tr class="goals-row">
                         <td><strong>Daily Goals</strong></td>
@@ -161,6 +172,7 @@
                         <td id="goal-carbs">180</td>
                         <td id="goal-fat">60</td>
                         <td id="goal-protein">175</td>
+                        <td></td>
                     </tr>
                     <tr class="remaining-row">
                         <td><strong>Remaining</strong></td>
@@ -168,32 +180,56 @@
                         <td id="remaining-carbs">180</td>
                         <td id="remaining-fat">60</td>
                         <td id="remaining-protein">175</td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </main>
 
+    <!-- Food Search Modal -->
+    <div id="foodModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Food to <span id="modalMealType"></span></h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Search Box -->
+                <div class="search-box">
+                    <input type="text" id="foodSearchInput" placeholder="Search for food (e.g., chicken, apple, rice)...">
+                    <button id="searchBtn">Search</button>
+                </div>
+                
+                <!-- Search Results -->
+                <div id="searchResults" class="search-results">
+                    <p class="search-hint">Type at least 2 characters to search</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Food Details Modal (for logging amount) -->
+    <div id="foodDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Log Food</h2>
+                <span class="close" id="closeFoodDetailsModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="selectedFoodInfo"></div>
+                <div class="amount-input">
+                    <label>Amount (grams):</label>
+                    <input type="number" id="foodAmountInput" placeholder="Enter grams" min="1">
+                    <p class="serving-hint" id="servingHint"></p>
+                </div>
+                <button id="logFoodBtn" class="btn-primary">Log Food</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Load JavaScript -->
     <script src="../js/utils.js"></script>
-    <script>
-        // Display current date
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
-    
-        // Load user's nutrition goals from appData
-        if (window.appData && window.appData.currentUser && window.appData.currentUser.profile) {
-            const profile = window.appData.currentUser.profile;
-            document.getElementById('goal-calories').textContent = profile.calorieGoal;
-            document.getElementById('goal-protein').textContent = profile.proteinGoal;
-            document.getElementById('goal-carbs').textContent = profile.carbGoal;
-            document.getElementById('goal-fat').textContent = profile.fatGoal;
-        }
-    
-        // Placeholder function - we'll build this out later
-        function addFood(mealType) {
-            alert('Add food for ' + mealType + ' - coming soon!');
-        }
-    </script>
+    <script src="../js/nutrition.js"></script>
 </body>
 </html>
