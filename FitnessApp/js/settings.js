@@ -1,4 +1,4 @@
-// Exercise page functionality
+// Settings page functionality
 
 // Logout function
 function logout() {
