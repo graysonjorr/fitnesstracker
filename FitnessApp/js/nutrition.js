@@ -10,17 +10,20 @@ let selectedFood = null;
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initializeDatePicker();
-    loadFoodLogs();
+    // loadFoodLogs(); // COMMENTED OUT - Coming Soon
     setupEventListeners();
 });
 
 // Setup Event Listeners
 function setupEventListeners() {
-    // Add food buttons
+    // Add food buttons - COMING SOON ALERT
     document.querySelectorAll('.add-food-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            currentMealType = e.target.closest('.add-food-btn').dataset.meal;
-            openFoodModal();
+            e.preventDefault();
+            alert('Coming Soon: Food logging with database integration');
+            // COMMENTED OUT - Will be enabled after database integration
+            // currentMealType = e.target.closest('.add-food-btn').dataset.meal;
+            // openFoodModal();
         });
     });
 
@@ -28,26 +31,29 @@ function setupEventListeners() {
     document.getElementById('prevDateBtn').addEventListener('click', () => {
         currentDate.setDate(currentDate.getDate() - 1);
         updateDatePicker();
-        loadFoodLogs();
+        // loadFoodLogs(); // COMMENTED OUT - Coming Soon
     });
 
     document.getElementById('nextDateBtn').addEventListener('click', () => {
         currentDate.setDate(currentDate.getDate() + 1);
         updateDatePicker();
-        loadFoodLogs();
+        // loadFoodLogs(); // COMMENTED OUT - Coming Soon
     });
 
     document.getElementById('nutritionDatePicker').addEventListener('change', (e) => {
         currentDate = new Date(e.target.value);
-        loadFoodLogs();
+        // loadFoodLogs(); // COMMENTED OUT - Coming Soon
     });
 
+    /* COMMENTED OUT - Coming Soon: Search functionality
     // Search
     document.getElementById('searchBtn').addEventListener('click', searchFoods);
     document.getElementById('foodSearchInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') searchFoods();
     });
+    */
 
+    /* COMMENTED OUT - Coming Soon: Modal functionality
     // Modal close buttons
     document.getElementById('closeModal').addEventListener('click', closeFoodModal);
     document.getElementById('closeFoodDetailsModal').addEventListener('click', closeFoodDetailsModal);
@@ -62,6 +68,7 @@ function setupEventListeners() {
             closeFoodDetailsModal();
         }
     });
+    */
 }
 
 // Date Picker Functions
@@ -79,6 +86,7 @@ function formatDateForAPI(date) {
     return date.toISOString().split('T')[0];
 }
 
+/* COMMENTED OUT - Coming Soon: All modal and API functions below
 // Modal Functions
 function openFoodModal() {
     document.getElementById('modalMealType').textContent = currentMealType;
@@ -313,3 +321,4 @@ async function deleteLog(logId) {
         alert('Error deleting log');
     }
 }
+*/ // END OF COMMENTED OUT SECTION
