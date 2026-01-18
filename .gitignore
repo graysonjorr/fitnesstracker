@@ -61,3 +61,6 @@ yarn-error.log
 *.swp
 *.swo
 *.swn
+
+FitnessApp/food_data/*.csv
+FitnessApp/food_data/
