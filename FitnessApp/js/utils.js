@@ -1,5 +1,17 @@
 // utils.js - Utility Functions for Data Management
 
+// Check if user is logged in
+function checkAuth() {
+    if (!sessionStorage.getItem('isLoggedIn')) {
+        window.location.href = 'login.html';
+    }
+}
+
+// Call this on every protected page
+if (window.location.pathname !== '/login.html' && window.location.pathname !== '/register.html') {
+    checkAuth();
+}
+
 // Initialize app data with a default logged-in user
 window.appData = {
     currentUser: {
