@@ -64,3 +64,4 @@ yarn-error.log
 
 FitnessApp/food_data/*.csv
 FitnessApp/food_data/food_data/
+food_data/
