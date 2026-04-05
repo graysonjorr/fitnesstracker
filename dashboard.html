@@ -122,18 +122,13 @@
         </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./js/supabase.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/dashboard.js"></script>
     <script>
-        // Display current date
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
-        
-        // Logout functionality
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            // You'll add proper logout logic later
-            window.location.href = 'index.html';
-        });
     </script>
 </body>
 </html>

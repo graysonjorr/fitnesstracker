@@ -1,15 +1,43 @@
 // utils.js - Utility Functions for Data Management
 
-// Commented out for GitHub Pages deployment (no backend authentication)
-// function checkAuth() {
-//     if (!sessionStorage.getItem('isLoggedIn')) {
-//         window.location.href = 'login.html';
-//     }
-// }
+// Auth helpers
+function getLoginPath() {
+    return window.location.pathname.includes('/pages/') ? './login.html' : './pages/login.html';
+}
 
-// if (window.location.pathname !== '/login.html' && window.location.pathname !== '/register.html') {
-//     checkAuth();
-// }
+async function checkAuth() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) {
+        window.location.href = getLoginPath();
+        return null;
+    }
+    return user;
+}
+
+async function setupNav() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    const userNameNav = document.getElementById('userNameNav');
+    if (userNameNav && user) {
+        userNameNav.textContent = user.email;
+    }
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = getLoginPath();
+        });
+    }
+}
+
+// Auto-run auth check on every page except login/register
+document.addEventListener('DOMContentLoaded', async () => {
+    const path = window.location.pathname;
+    const isAuthPage = path.includes('/login') || path.includes('/register');
+    if (!isAuthPage) {
+        await checkAuth();
+        await setupNav();
+    }
+});
 
 // Initialize app data with a default logged-in user
 window.appData = {
